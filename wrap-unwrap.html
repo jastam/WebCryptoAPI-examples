@@ -1,0 +1,16 @@
+
+	window.crypto.subtle.generateKey(algorithm = 
+	{
+		name: "AES-CTR",
+		length: 128
+	},
+	false,
+	["wrapKey"]).then(
+		wrappingKey => {
+			window.crypto.subtle.wrapKey("jwk", pubkey, wrappingKey, {name: "AES-CTR",counter : new ArrayBuffer(16), length: 128}).then(
+				wrappedKey => {
+					console.log(wrappedKey)
+				}
+			);
+		}
+	);

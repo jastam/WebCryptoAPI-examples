@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>getRandomValues - Web Cryptography API</title>
+  <script
+	  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+	  crossorigin="anonymous"
+  ></script>
+</head>
+<body>
+	<label for="generate_amount">Amount to genererate: </label><input type="number" id="amount" value="5">
+	<button type="button" id="generate">Generate</button>
+	<div id="output"></div>
+	<script>
+		$(document).ready(function(){
+			
+			$("#generate").click(function(){
+				var amount = parseInt($("#amount").val());
+
+				var randomValues = window.crypto.getRandomValues(new Uint32Array(amount));
+
+				$("#output").html(randomValues.join("<br/>"));
+			});
+		});
+	</script>
+</body>
+</html>

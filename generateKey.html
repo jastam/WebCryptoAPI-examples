@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>generateKey - Web Cryptography API</title>
+  <script
+	  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+	  crossorigin="anonymous"
+  ></script>
+</head>
+<body>
+	<div id="output">Open console for output</div>
+	<br/>
+	<label for="algorithm">Algorithm:</label>
+	<select id="algorithm">
+		<option>RSASSA-PKCS1-v1_5</option>
+		<option>RSA-PSS</option>
+		<option>RSA-OAEP</option>
+		<option>ECDSA</option>
+		<option>ECDH</option>
+		<option>AES-CTR</option>
+		<option>AES-CBC</option>
+		<option>AES-GCM</option>
+		<option>AES-KW</option>
+		<option>HMAC</option>
+	</select>
+	<button type="button" id="generatekey">Generate</button>
+	<script>
+		$(document).ready(function(){
+			
+			$("#generatekey").click(function(){
+
+				switch($("#algorithm").val()) {
+					
+					case "RSASSA-PKCS1-v1_5":
+					var keyAlgorithm = {
+						name: "RSASSA-PKCS1-v1_5",
+						
+						// RsaHashedKeyGenParams
+						
+						// The length, in bits, of the RSA modulus
+						modulusLength: 2048,
+						// The RSA public exponent
+						publicExponent: new Uint8Array([0x01, 0x00, 0x01]),  // Equivalent to 65537
+						// The hash algorithm to use
+						hash: {
+							name: "SHA-256"
+						}
+					};
+					var keyUsages = ["sign", "verify"];
+					break;
+					
+					case "RSA-PSS":
+					var keyAlgorithm = {
+						name: "RSA-PSS",
+						
+						// RsaHashedKeyGenParams
+						
+						// The length, in bits, of the RSA modulus
+						modulusLength: 2048,
+						// The RSA public exponent
+						publicExponent: new Uint8Array([0x01, 0x00, 0x01]),  // Equivalent to 65537
+						// The hash algorithm to use
+						hash: {
+							name: "SHA-256"
+						}
+					};
+					var keyUsages = ["sign", "verify"];
+					break;
+					
+					case "RSA-OAEP":
+					var keyAlgorithm = {
+						name: "RSA-OAEP",
+						
+						// RsaHashedKeyGenParams
+						
+						// The length, in bits, of the RSA modulus
+						modulusLength: 2048,
+						// The RSA public exponent
+						publicExponent: new Uint8Array([0x01, 0x00, 0x01]),  // Equivalent to 65537
+						// The hash algorithm to use
+						hash: {
+							name: "SHA-256"
+						}
+					};
+					var keyUsages = ["encrypt", "decrypt"];
+					break;
+				
+					case "ECDSA":
+					var keyAlgorithm = {
+						name: "ECDSA",
+						
+						// EcKeyGenParams
+
+						// A named curve
+						namedCurve: "P-256" // "P-256", "P-384", "P-521"
+					};
+					var keyUsages = ["sign", "verify"];
+					break;
+				
+					case "ECDH":
+					var keyAlgorithm = {
+						name: "ECDH",
+						
+						// EcKeyGenParams
+
+						// A named curve
+						namedCurve: "P-256" // "P-256", "P-384", "P-521"
+					};
+					var keyUsages = ["deriveKey", "deriveBits"];
+					break;
+				
+					case "AES-CTR":
+					var keyAlgorithm = {
+						name: "AES-CTR",
+						
+						// AesKeyGenParams
+
+						// The length, in bits, of the key.
+						length: 128
+					};
+					var keyUsages = ["encrypt", "decrypt"];
+					break;
+				
+					case "AES-CBC":
+					var keyAlgorithm = {
+						name: "AES-CBC",
+						
+						// AesKeyGenParams
+
+						// The length, in bits, of the key.
+						length: 128
+					};
+					var keyUsages = ["encrypt", "decrypt"];
+					break;
+				
+					case "AES-GCM":
+					var keyAlgorithm = {
+						name: "AES-GCM",
+						
+						// AesKeyGenParams
+
+						// The length, in bits, of the key.
+						length: 128
+					};
+					var keyUsages = ["encrypt", "decrypt"];
+					break;
+				
+					case "AES-KW":
+					var keyAlgorithm = {
+						name: "AES-KW",
+						
+						// AesKeyGenParams
+
+						// The length, in bits, of the key.
+						length: 128
+					};
+					var keyUsages = ["wrapKey", "unwrapKey"];
+					break;
+				
+					case "HMAC":
+					var keyAlgorithm = {
+						name: "HMAC",
+						
+						// HmacKeyGenParams
+
+						// The length (in bits) of the key to generate. If unspecified, the
+						// recommended length will be used, which is the size of the associated hash function's block
+						// size.
+						length: 128,
+
+						// The inner hash function to use.
+						hash: {
+							name: "SHA-256"
+						}
+					};
+					var keyUsages = ["sign", "verify"];
+					break;
+				}
+
+
+				var extractable = false;
+
+				window.crypto.subtle.generateKey(keyAlgorithm, extractable, keyUsages).then(key => {
+						console.log(key);
+					},
+					console.error.bind(console, "Unable to generate a key")
+				  )
+				
+			});
+		});
+	</script>
+</body>
+</html>

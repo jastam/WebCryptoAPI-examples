@@ -1,0 +1,12 @@
+
+	window.crypto.subtle.exportKey("jwk", pubkey).then(
+		exportedKey => {
+			
+			window.crypto.subtle.importKey("jwk", exportedKey, keyAlgorithm, extractable, keyUsages).then(
+				importedKey => {
+					console.log(importedKey);
+				}
+			);
+			
+		}
+	);
